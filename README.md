@@ -21,4 +21,4 @@ terraform apply
 
 ```
 terraform destroy
-```# terraform_basics_locking
+```
