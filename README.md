@@ -22,3 +22,8 @@ terraform apply
 ```
 terraform destroy
 ```
+
+### Doku
+https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create
+https://developer.hashicorp.com/terraform/language/backend/s3#use_lockfile
+
