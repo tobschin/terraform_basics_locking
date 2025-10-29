@@ -1,0 +1,1 @@
+bootstrap_bucket_name = "misaslockingbucket2"

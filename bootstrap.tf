@@ -14,9 +14,8 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-
 resource "aws_s3_bucket" "tf_locking_bucket" {
-  bucket = "lockbuckets_name"
+  bucket = var.bootstrap_bucket_name
 
   tags = {
     Name        = "My bucket"
