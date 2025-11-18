@@ -1,15 +1,17 @@
 name: DEV-Environmet CI/CD for INT and DEV
 on:
-  push:
-    branches: ["develop", "main"]
   workflow_dispatch:
+  push:
+    branches:
+      ["develop", "main", "release*"]
 env:
   ENVIRONMENT_NAME: ${{vars.ENVIRONMENT_NAME}}
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'int' || 'dev'}}
+    # deployed develop - branch auf 'dev' main branch auf 'int' und branches, die mit 'release' starten auf 'prod' - Environment
+    environment: ${{ startsWith(github.ref_name, 'release') && 'prod' && github.ref == 'refs/heads/main' && 'int' || 'dev'}}
 
     steps:
       - name: Checkout
@@ -40,9 +42,9 @@ jobs:
       - name: Terraform Plan
         id: plan
         working-directory: ./terraform
-        run: terraform plan -var-file="variables/customvariables-${{env.ENVIRONMENT_NAME}}.tfvars" -no-color -input=false
+        run: terraform plan -var-file="variables/customvariables-${{env.ENVIRONMENT_NAME}}.tfvars" -no-color -input=false -out=tfplan
         #run: terraform plan -no-color -input=false
         continue-on-error: true
       - name: Terraform Apply
         working-directory: ./terraform
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve tfplan
