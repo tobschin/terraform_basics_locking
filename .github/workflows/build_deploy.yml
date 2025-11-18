@@ -1,4 +1,4 @@
-name: DEV-Environmet CI/CD for INT and DEV
+name: Environmet CI/CD
 on:
   workflow_dispatch:
   push:
